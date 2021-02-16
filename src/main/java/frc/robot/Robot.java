@@ -87,9 +87,6 @@ public class Robot extends TimedRobot {
    * LiveWindow and SmartDashboard integrated updating.
    */
 
-  boolean bb_on;
-  boolean cc_on;
-
   @Override
   public void robotPeriodic() {
 
