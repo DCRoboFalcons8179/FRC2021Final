@@ -9,7 +9,6 @@ public class controls {
     //constructor
     public controls(int address){
         joy = new Joystick(address);
-
         // Analog Buttons
 
         axis1 = joy.getRawAxis(1);
