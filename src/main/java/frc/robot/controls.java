@@ -12,13 +12,12 @@ public class controls {
     public static void setup(){
         logA.setZChannel(4);
         logA.setThrottleChannel(3);
-        logA.setTwistChannel(2);
+        logA.setTwistChannel(2);    
     }
     //Xbox indexes based on following chart
     //https://lh3.googleusercontent.com/proxy/evdqSkui7r-NKGg678aqL05sNj5gMnzkqam7rQmciUfh8sOb1SfrTTj5B454JXrq3lqrNm7kXVO7f03I_XpCbpRWYESWMEmfrXdibQhkIdqW43bhsDrd214bhbqXQ85-aQyB__lg0eEsiWvDzuodr2zApp92
     public static double[] getXboxAnalog(){
         double[] values = new double[6];
-        
         values[0] = xbox.getRawAxis(0);
         values[1] = xbox.getRawAxis(1);
         values[2] = xbox.getRawAxis(2);
