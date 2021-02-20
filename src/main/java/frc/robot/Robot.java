@@ -80,9 +80,6 @@ public class Robot extends TimedRobot {
     xbox = new controls(0);
 
 
-    System.out.println(xbox.analog[0]);
-    BigLog.analog[0];
-    System.out.println(BigLog.button[5]);
     BigLog.refreshValues();
     xbox.refreshValues();
   }
@@ -138,6 +135,7 @@ public class Robot extends TimedRobot {
   
    @Override
   public void teleopPeriodic() {
+    xbox.refreshValues();
     double forward = xbox.analog[5];
     double side = xbox.analog[4];
     mecanum.drive(forward, side);
