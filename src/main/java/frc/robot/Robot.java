@@ -75,7 +75,15 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     mecanum.setup();
-    controls.setup();
+    controls BigLog = new controls(2);
+    controls xbox = new controls(0);
+
+
+    xbox.axis1;
+    BigLog.axis1;
+    BigLog.button5;
+    BigLog.refreshValues();
+    xbox.refreshValues();
   }
 
   /**
@@ -89,7 +97,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-
+    
 // Pull this
   }
 
