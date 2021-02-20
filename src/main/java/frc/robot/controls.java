@@ -2,12 +2,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public class controls {
+public class Controls {
     //Get the Joystick
     Joystick joy;
 
     //constructor
-    public controls(int address){
+    public Controls(int address){
         joy = new Joystick(address);
         // Analog Controls
 

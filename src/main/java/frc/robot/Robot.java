@@ -15,17 +15,17 @@ public class Robot extends TimedRobot {
   // BEGIN Declare and Attach CAN IDs to devices
   // PDP
   //private final PowerDistributionPanel PDP = new PowerDistributionPanel(0);
-  controls BigLog;
-  controls xbox;
+  Controls BigLog;
+  Controls xbox;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
-    mecanum.setup();
-    BigLog = new controls(2);
-    xbox = new controls(0);
+    Mecanum.setup();
+    BigLog = new Controls(2);
+    xbox = new Controls(0);
 
 
     BigLog.refreshValues();
@@ -86,6 +86,6 @@ public class Robot extends TimedRobot {
     xbox.refreshValues();
     double forward = xbox.analog[5];
     double side = xbox.analog[4];
-    mecanum.drive(forward, side);
+    Mecanum.drive(forward, side);
    }
 }

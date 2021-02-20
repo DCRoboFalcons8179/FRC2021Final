@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.kinematics.MecanumDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.MecanumDriveWheelSpeeds;
   
 
-public class mecanum {
+public class Mecanum {
     // Drive Motors
     private static final WPI_VictorSPX frontL = new WPI_VictorSPX(2);
     private static final WPI_VictorSPX frontR = new WPI_VictorSPX(4);

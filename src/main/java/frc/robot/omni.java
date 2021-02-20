@@ -4,7 +4,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-public class omni {
+public class Omni {
     private static final WPI_VictorSPX leftDriveA = new WPI_VictorSPX(2);
     private static final WPI_VictorSPX leftDriveB = new WPI_VictorSPX(4);
     private static final WPI_VictorSPX rightDriveA = new WPI_VictorSPX(13);
