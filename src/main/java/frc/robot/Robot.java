@@ -14,8 +14,10 @@ public class Robot extends TimedRobot {
 
   // BEGIN Declare and Attach CAN IDs to devices
   // PDP
-  //private final PowerDistributionPanel PDP = new PowerDistributionPanel(0);
+  
+  //Large logitech joystick
   Controls BigLog;
+  //Xbox Controller
   Controls xbox;
   /**
    * This function is run when the robot is first started up and should be

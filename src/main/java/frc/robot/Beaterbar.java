@@ -12,6 +12,7 @@ public class Beaterbar {
 
     int reverse;
 
+    //joystick objects are not directly available in main method, get values from controls class
     public Beaterbar (Joystick inputJoy, int inputForward, int inputReverse) {
     
       joy = inputJoy;
@@ -22,6 +23,7 @@ public class Beaterbar {
 
     }
 
+    //needs forward/reverse signal as method parameter
     public void periodicbar () {
         //Find if button for Beater Bar is pressed
         if (joy.getRawButton(forward)) {
