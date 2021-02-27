@@ -11,6 +11,13 @@ public class Camera {
         camera.setFPS(framerate);
         camera.setPixelFormat(PixelFormat.kMJPEG);
         camera.setExposureAuto();
-        camera.setBrightness(50);
+    }
+    public Camera(int xResloution, int yResolution, int framerate, int brightness){
+        camera = CameraServer.getInstance().startAutomaticCapture();
+        camera.setResolution(xResloution, yResolution);
+        camera.setFPS(framerate);
+        camera.setPixelFormat(PixelFormat.kMJPEG);
+        camera.setExposureAuto();
+        camera.setBrightness(brightness);
     }
 }

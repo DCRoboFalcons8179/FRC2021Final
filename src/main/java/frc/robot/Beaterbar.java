@@ -32,7 +32,7 @@ public class Beaterbar {
 
     //needs forward/reverse signal as method parameter
     public void periodicbar () {
-        //Find if button for Beater Bar is pressed
+        //Find if button for Beater Bar is pressed; set beater bar output
         if (joy.getRawButton(forward)) {
 
           bbar.set(ControlMode.PercentOutput, .50);
