@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 
@@ -47,7 +49,12 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     
 // Pull this
+
+
   }
+
+  public final WPI_TalonFX bbar_motor = new WPI_TalonFX(11);
+
 
   /**
    * This autonomous (along with the chooser code above) shows how to select
