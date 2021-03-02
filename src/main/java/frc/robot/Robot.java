@@ -10,7 +10,11 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+
+
+
 
 public class Robot extends TimedRobot {
 
@@ -18,9 +22,15 @@ public class Robot extends TimedRobot {
   // PDP
   
   //Large logitech joystick
-  Controls BigLog;
-  //Xbox Controller
-  Controls xbox;
+  public Joystick BigLog = new Joystick(0);
+
+
+  // Beater Bar
+  // Beater Bar Code
+  public final WPI_TalonFX bbar_motor = new WPI_TalonFX(11);
+
+  public Beaterbar bbar = new Beaterbar(BigLog, 8, 5, bbar_motor);
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -28,12 +38,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     Mecanum.setup();
-    BigLog = new Controls(2);
-    xbox = new Controls(0);
 
-
-    BigLog.refreshValues();
-    xbox.refreshValues();
   }
 
   /**
@@ -53,7 +58,6 @@ public class Robot extends TimedRobot {
 
   }
 
-  public final WPI_TalonFX bbar_motor = new WPI_TalonFX(11);
 
 
   /**
@@ -92,9 +96,9 @@ public class Robot extends TimedRobot {
   
    @Override
   public void teleopPeriodic() {
-    xbox.refreshValues();
-    double forward = xbox.analog[5];
-    double side = xbox.analog[4];
-    Mecanum.drive(forward, side);
+
+    bbar.periodicbar();
+
+    // Mecanum.drive(forward, side);
    }
 }
