@@ -25,7 +25,9 @@ public class Robot extends TimedRobot {
   private final PowerDistributionPanel PDP = new PowerDistributionPanel(0);
   private TalonFX tilt_motor = new WPI_TalonFX(6);
 	private TalonSRX leftTurret = new  WPI_TalonSRX(7);
-	private TalonSRX rightTurret = new WPI_TalonSRX(8);
+  private TalonSRX rightTurret = new WPI_TalonSRX(8);
+  
+
 
 	// Drive Motors
 	private TalonSRX leftDrive = new WPI_TalonSRX(2);
@@ -35,8 +37,11 @@ public class Robot extends TimedRobot {
 	
 	private Joystick _gamepad = new Joystick(3);
 
-	private driveMotorVelocity vroom = new driveMotorVelocity(leftDrive, rightDrive, leftFollow, rightFollow,_gamepad);
-
+  private driveMotorVelocity vroom = new driveMotorVelocity(leftDrive, rightDrive, leftFollow, rightFollow,_gamepad);
+  
+  BbarConvMotors bbar;
+  TalonFX bbar_motor;
+  TalonFX conv_motor;
 
   velocityControl shooterSpeed;
 	double shooter_rpm;
@@ -76,7 +81,14 @@ public class Robot extends TimedRobot {
 		computer_tilt_set_table = tab.add("Tilt Set Enable", false).getEntry();
 
 
-		tilt = new tiltcontrol(tilt_motor,_gamepad);
+    tilt = new tiltcontrol(tilt_motor,_gamepad);
+
+
+    final TalonFX bbar_motor = new TalonFX(11);
+    final TalonFX conv_motor = new TalonFX(3);
+
+    BbarConvMotors bbarconv = new BbarConvMotors(_gamepad, 5, 10, bbar_motor, 0, 8, conv_motor);
+  
   }
 
   /**
@@ -90,6 +102,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+
+   
     
 // Pull this
 
