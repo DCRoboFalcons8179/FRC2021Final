@@ -103,6 +103,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
 
+    bbar.periodic_bar_conv();
+
    
     
 // Pull this
