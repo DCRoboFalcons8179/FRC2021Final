@@ -23,6 +23,7 @@ public class tiltcontrol {
 
     Joystick joy;
     public double setpoint;
+    public int y = 1;
 
 
     public tiltcontrol(TalonFX tilt_input, Joystick joy_input) {
@@ -73,12 +74,17 @@ public class tiltcontrol {
 
     public void tiltcontrolPeriodic() {
 
-        if (joy.getRawButton(2)) {
-            tilt.set(ControlMode.PercentOutput, joy.getTwist()*.5);
+        if (joy.getRawAxis(y) == -1) {
+            tilt.set(ControlMode.PercentOutput, 0.1);
             setpoint = tilt.getSelectedSensorPosition() / ktranslate;
             // System.out.println("Percent");
 
-        }else {
+        }else if (joy.getRawAxis(y) == 1) {
+            tilt.set(ControlMode.PercentOutput, -0.07);
+            setpoint = tilt.getSelectedSensorPosition() / ktranslate;
+               
+        
+        } else {
             tilt.set(ControlMode.Position, (setpoint * ktranslate));
 
             // System.out.println("PID");
