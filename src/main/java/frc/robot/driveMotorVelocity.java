@@ -183,8 +183,8 @@ public class driveMotorVelocity {
 			/* Uncomment to view velocity native units */
 		}else{
 			if (_firstCall) {
-				System.out.println("This is Velocity Closed Loop with an Arbitrary Feed Forward.");
-				System.out.println("Travel [-500, 500] RPM while having the ability to add a FeedForward with joyX ");
+				// System.out.println("This is Velocity Closed Loop with an Arbitrary Feed Forward.");
+				// System.out.println("Travel [-500, 500] RPM while having the ability to add a FeedForward with joyX ");
 				
 				/* Determine which slot affects which PID */
                 right.selectProfileSlot(Constants.kSlot_Velocit, Constants.PID_PRIMARY);
@@ -209,7 +209,7 @@ public class driveMotorVelocity {
         double actual_RPM2 = actual_RPM - (right.getSelectedSensorVelocity() / (double)1024 * -600f); //4/3 scaling factor
         
         // System.out.println("Vel[RPM]: " + actual_RPM + "," + actual_RPM2);
-        System.out.println("Vel[RPM]: " + actual_RPM2);
+        // System.out.println("Vel[RPM]: " + actual_RPM2);
 
 
     }

@@ -83,7 +83,7 @@ public class Robot extends TimedRobot {
 		computer_tilt_set_table = tab.add("Tilt Set Enable", false).getEntry();
 
 
-    tilt = new tiltcontrol(tilt_motor,_gamepad);
+    tilt = new tiltcontrol(tilt_motor,dashboard);
 
 
     final TalonFX bbar_motor = new TalonFX(11);
