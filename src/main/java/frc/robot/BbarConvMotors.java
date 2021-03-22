@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Joystick;
 // Inputs
@@ -17,7 +18,7 @@ public class BbarConvMotors {
 
     TalonFX bbar;
 
-    TalonFX conveyor;
+    VictorSPX conveyor;
 
     int convForward;
 
@@ -25,7 +26,7 @@ public class BbarConvMotors {
 
     //joystick objects are not directly available in main method, get values from controls class
     public BbarConvMotors(Joystick inputJoy, int inputForward, int inputReverse, TalonFX bbarMotor, 
-        int ccForward, int ccReverse, TalonFX convMotor) {
+        int ccForward, int ccReverse, VictorSPX convMotor) {
     
       bbar = bbarMotor;
 

@@ -22,10 +22,10 @@ public class Robot extends TimedRobot {
 
   // BEGIN Declare and Attach CAN IDs to devices
   // PDP
-  private final PowerDistributionPanel PDP = new PowerDistributionPanel(0);
-  private TalonFX tilt_motor = new WPI_TalonFX(6);
+  	private final PowerDistributionPanel PDP = new PowerDistributionPanel(0);
+  	private TalonFX tilt_motor = new WPI_TalonFX(6);
 	private TalonSRX leftTurret = new  WPI_TalonSRX(7);
-  private TalonSRX rightTurret = new WPI_TalonSRX(8);
+  	private TalonSRX rightTurret = new WPI_TalonSRX(8);
   
 
 
@@ -36,6 +36,8 @@ public class Robot extends TimedRobot {
 	private VictorSPX rightFollow = new WPI_VictorSPX(14);
 	
 	private Joystick _gamepad = new Joystick(3);
+
+	private Joystick dashboard = new Joystick(4);
 
   private driveMotorVelocity vroom = new driveMotorVelocity(leftDrive, rightDrive, leftFollow, rightFollow,_gamepad);
   
@@ -85,9 +87,9 @@ public class Robot extends TimedRobot {
 
 
     final TalonFX bbar_motor = new TalonFX(11);
-    final TalonFX conv_motor = new TalonFX(3);
+    final VictorSPX conv_motor = new WPI_VictorSPX(3);
 
-    BbarConvMotors bbarconv = new BbarConvMotors(_gamepad, 5, 10, bbar_motor, 0, 8, conv_motor);
+    bbar = new BbarConvMotors(dashboard, 6, 11, bbar_motor, 1, 9, conv_motor);
   
   }
 
@@ -103,7 +105,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
 
-    bbar.periodic_bar_conv();
 
    
     
@@ -156,6 +157,10 @@ public class Robot extends TimedRobot {
 
 		shooterSpeed.velocityControlPeriodic();
 		tilt.tiltcontrolPeriodic();
+
+		//beaterbar and conveyor
+		bbar.periodic_bar_conv();
+
 
 		// CONTROLLING THE SHOOTER WHEELS
 
