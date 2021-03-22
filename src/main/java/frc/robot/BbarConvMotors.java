@@ -12,9 +12,13 @@ public class BbarConvMotors {
     // Declaring variables
     Joystick joy;
 
-    int forward;
+    int bbarForward;
 
-    int reverse;
+    int bbarReverse;
+
+    int bbarForwardContinous;
+
+    int bbarReverseContinous;
 
     TalonFX bbar;
 
@@ -24,21 +28,29 @@ public class BbarConvMotors {
 
     int convReverse;
 
+    int convForwardContinous;
+
+    int convReverseContinous;
+
     //joystick objects are not directly available in main method, get values from controls class
-    public BbarConvMotors(Joystick inputJoy, int inputForward, int inputReverse, TalonFX bbarMotor, 
-        int ccForward, int ccReverse, VictorSPX convMotor) {
+    public BbarConvMotors(Joystick inputJoy, int bForward, int bReverse, TalonFX bbarMotor, 
+        int ccForward, int ccReverse, int ccForwardCont, int ccReverseCont, VictorSPX convMotor) {
     
       bbar = bbarMotor;
 
       joy = inputJoy;
 
-      forward = inputForward;
+      bbarForward = bForward;
 
-      reverse = inputReverse;
+      bbarReverse = bReverse;
 
       convForward = ccForward;
 
       convReverse = ccReverse;
+
+      convForwardContinous = ccForwardCont;
+
+      convReverseContinous = ccReverseCont;
 
       conveyor = convMotor;
 
@@ -47,19 +59,22 @@ public class BbarConvMotors {
     //needs forward/reverse signal as method parameter
     public void periodic_bar_conv () {
         //Find if button for Beater Bar is pressed; set beater bar output
-        if (joy.getRawButton(forward)) {
+        if (joy.getRawButton(bbarForward)) {
 
           bbar.set(ControlMode.PercentOutput, .50);
    
-        }  else if (joy.getRawButton(reverse)) {
+        }  else if (joy.getRawButton(bbarReverse)) {
 
           bbar.set(ControlMode.PercentOutput, -.50);
-
-        } else {
+         }
+        
+        else {
 
           bbar.set(ControlMode.PercentOutput, 0); 
 
         }
+
+
         if (joy.getRawButtonPressed(convForward)) {
 
           conveyor.set(ControlMode.PercentOutput, .75);
@@ -69,9 +84,15 @@ public class BbarConvMotors {
 
           conveyor.set(ControlMode.PercentOutput, -.75);
           
-        }
+        } else if (joy.getRawButton(convForwardContinous)) {
 
-        else {
+          conveyor.set(ControlMode.PercentOutput, .75);
+
+        } else if (joy.getRawButton(convReverseContinous)) {
+
+          conveyor.set(ControlMode.PercentOutput, -.75);
+
+        }  else {
 
           conveyor.set(ControlMode.PercentOutput, 0);
 
