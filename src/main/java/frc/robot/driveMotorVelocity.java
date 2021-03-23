@@ -21,18 +21,23 @@ public class driveMotorVelocity {
     VictorSPX leftFollow;
     VictorSPX rightFollow;
     Joystick joy;
+    Joystick nudge;
+    int channel;
 
     boolean _firstCall;
     boolean _state;
 
 
-    driveMotorVelocity(TalonSRX left_in, TalonSRX right_in, VictorSPX left_follow_in, VictorSPX right_follow_in,Joystick joy_in) {
+    driveMotorVelocity(TalonSRX left_in, TalonSRX right_in, VictorSPX left_follow_in,
+        VictorSPX right_follow_in,Joystick joy_in, Joystick nudge_in, int channel_in) {
 
         left = left_in;
         right = right_in;
         leftFollow = left_follow_in;
         rightFollow = right_follow_in;
         joy = joy_in;
+        nudge = nudge_in;
+        channel = channel_in;
 
         left.set(ControlMode.PercentOutput, 0);
         right.set(ControlMode.PercentOutput, 0);
@@ -171,18 +176,30 @@ public class driveMotorVelocity {
         double target_unitsPer100ms = target_RPM * 1024 / 600.0;	//RPM -> Native units
         double feedFwdTerm = turn * 0.10;	// Percentage added to the close loop output
         
+        if (nudge.getRawAxis(channel) == 0) {
+            _state = false;
+        } 
 
+        if (_state) {
+            if(nudge.getRawAxis(channel) == 1) {
+                left.set(ControlMode.PercentOutput, -0.2);
+                right.set(ControlMode.PercentOutput, 0.2);
+            } 
+            else if (nudge.getRawAxis(channel) == -1) {
+                left.set(ControlMode.PercentOutput,   0.2);
+                right.set(ControlMode.PercentOutput, -0.2);
+            }
 
-		if(!_state){
-			if (_firstCall)
+        }
+		else{
+			if (_firstCall) {
 				// System.out.println("This is Arcade drive.\n");
 			
 			left.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, +turn);
 			right.set(ControlMode.PercentOutput, forward, DemandType.ArbitraryFeedForward, -turn);
 			
 			/* Uncomment to view velocity native units */
-		}else{
-			if (_firstCall) {
+		}else if (_firstCall) {
 				// System.out.println("This is Velocity Closed Loop with an Arbitrary Feed Forward.");
 				// System.out.println("Travel [-500, 500] RPM while having the ability to add a FeedForward with joyX ");
 				

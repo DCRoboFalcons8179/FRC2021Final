@@ -39,7 +39,8 @@ public class Robot extends TimedRobot {
 
 	private Joystick dashboard = new Joystick(4);
 
-  private driveMotorVelocity vroom = new driveMotorVelocity(leftDrive, rightDrive, leftFollow, rightFollow,_gamepad);
+  private driveMotorVelocity vroom = new driveMotorVelocity(leftDrive, rightDrive, leftFollow, 
+    rightFollow,_gamepad, dashboard, 1);
   
   BbarConvMotors bbar;
   TalonFX bbar_motor;
