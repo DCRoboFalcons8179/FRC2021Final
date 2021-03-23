@@ -37,6 +37,8 @@ public class Robot extends TimedRobot {
 	
 	private Joystick _gamepad = new Joystick(3);
 
+  private Limelight limelight = new Limelight();
+
 	private Joystick dashboard = new Joystick(4);
 
   private driveMotorVelocity vroom = new driveMotorVelocity(leftDrive, rightDrive, leftFollow, 
@@ -105,7 +107,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-
+    limelight.refreshValues();
 
    
     
@@ -195,7 +197,7 @@ public class Robot extends TimedRobot {
 
 		// CONTROLLING THE WHEELS
 
-		vroom.velocityControlPeriodic();
+		vroom.velocityControlPeriodic(limelight.tx);
 
 
 

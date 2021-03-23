@@ -143,7 +143,7 @@ public class driveMotorVelocity {
     public double actual_RPM;
     public double set_rpm;
 
-    public void velocityControlPeriodic() {
+    public void velocityControlPeriodic(double tx) {
 		/* Gamepad processing */
 		double forward = getForward();
 		double turn = getTurn();
@@ -179,13 +179,19 @@ public class driveMotorVelocity {
         if (nudge.getRawAxis(channel) == 0) {
             _state = false;
         } 
+        else if ((tx > 1 || tx < -1) && joy.getRawButton(8)){
+            _state = false;
+        }
+        else {
+            _state = true;
+        }
 
         if (_state) {
-            if(nudge.getRawAxis(channel) == 1) {
+            if((nudge.getRawAxis(channel) == 1) || tx > 1) {
                 left.set(ControlMode.PercentOutput, -0.2);
                 right.set(ControlMode.PercentOutput, 0.2);
             } 
-            else if (nudge.getRawAxis(channel) == -1) {
+            else if ((nudge.getRawAxis(channel) == -1) || tx < -1) {
                 left.set(ControlMode.PercentOutput,   0.2);
                 right.set(ControlMode.PercentOutput, -0.2);
             }
