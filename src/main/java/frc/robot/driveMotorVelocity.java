@@ -187,11 +187,11 @@ public class driveMotorVelocity {
         }
 
         if (_state) {
-            if((nudge.getRawAxis(channel) == 1) || tx > 1) {
+            if((nudge.getRawAxis(channel) == -1) || tx > 1) {
                 left.set(ControlMode.PercentOutput, -0.2);
                 right.set(ControlMode.PercentOutput, 0.2);
             } 
-            else if ((nudge.getRawAxis(channel) == -1) || tx < -1) {
+            else if ((nudge.getRawAxis(channel) == +1) || tx < -1) {
                 left.set(ControlMode.PercentOutput,   0.2);
                 right.set(ControlMode.PercentOutput, -0.2);
             }
