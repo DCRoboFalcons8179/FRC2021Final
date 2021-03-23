@@ -216,7 +216,14 @@ public class driveMotorVelocity {
 
 
     private double getForward() {
-        double forward = -0.6* Deadband(joy.getY());
+        double scale;
+        if (joy.getRawButton(1)) {
+            scale = 1;
+        } else {
+            scale = 0.6;
+        }
+        double forward = -1 * scale * Deadband(joy.getY());
+
         
         return forward;
     }
