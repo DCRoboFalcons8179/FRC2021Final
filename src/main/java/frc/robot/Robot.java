@@ -90,7 +90,7 @@ public class Robot extends TimedRobot {
     final TalonFX bbar_motor = new TalonFX(11);
     final VictorSPX conv_motor = new WPI_VictorSPX(3);
 
-    bbar = new BbarConvMotors(dashboard, 6, 11, bbar_motor, 1, 9, conv_motor);
+    bbar = new BbarConvMotors(dashboard, 7, 5, 6, 11, bbar_motor, 1, 9, 10, 3, conv_motor);
   
   }
 
