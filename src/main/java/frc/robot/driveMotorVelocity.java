@@ -237,11 +237,11 @@ public class driveMotorVelocity {
 
     private double Deadband(double value) {
 		/* Upper deadband */
-		if (value >= +0.05) 
+		if (value >= +0.1) 
 			return value;
 		
 		/* Lower deadband */
-		if (value <= -0.05)
+		if (value <= -0.1)
 			return value;
 		
 		/* Outside deadband */
