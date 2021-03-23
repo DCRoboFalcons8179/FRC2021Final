@@ -33,7 +33,7 @@ public class BbarConvMotors {
     int convReverseContinous;
 
     //joystick objects are not directly available in main method, get values from controls class
-    public BbarConvMotors(Joystick inputJoy, int bForward, int bReverse, TalonFX bbarMotor, 
+    public BbarConvMotors(Joystick inputJoy, int bForward, int bReverse, int bForwardContinous, int bReverseContinous, TalonFX bbarMotor, 
         int ccForward, int ccReverse, int ccForwardCont, int ccReverseCont, VictorSPX convMotor) {
     
       bbar = bbarMotor;
@@ -43,6 +43,10 @@ public class BbarConvMotors {
       bbarForward = bForward;
 
       bbarReverse = bReverse;
+
+      bbarForwardContinous = bForwardContinous;
+
+      bbarReverseContinous = bReverseContinous;
 
       convForward = ccForward;
 
@@ -56,24 +60,50 @@ public class BbarConvMotors {
 
     }
 
+    private boolean go = false;
+    private boolean up = true;
+
     //needs forward/reverse signal as method parameter
     public void periodic_bar_conv () {
         //Find if button for Beater Bar is pressed; set beater bar output
-        if (joy.getRawButton(bbarForward)) {
+        if (joy.getRawButtonPressed(bbarForward)) {
 
-          bbar.set(ControlMode.PercentOutput, .50);
+          go = !go;
+          up = true;
    
-        }  else if (joy.getRawButton(bbarReverse)) {
+        }  else if (joy.getRawButtonPressed(bbarReverse)) {
 
-          bbar.set(ControlMode.PercentOutput, -.50);
-         }
-        
-        else {
+          go = !go;
+          up = false;
 
-          bbar.set(ControlMode.PercentOutput, 0); 
+        } else  {
+          
+          if (joy.getRawButton(bbarForwardContinous)) {
 
+            bbar.set(ControlMode.PercentOutput, .50);
+            go = false;
+
+          }
+          else if (joy.getRawButton(bbarReverseContinous)){
+
+            bbar.set(ControlMode.PercentOutput, -.50);
+            go = false;
+            
+          } else {
+            bbar.set(ControlMode.PercentOutput, 0);
+          }
         }
+        if (go) {
+          if (up) {
 
+            bbar.set(ControlMode.PercentOutput, .50);
+
+          } else {
+
+            bbar.set(ControlMode.PercentOutput, -.50);
+
+          }
+        } 
 
         if (joy.getRawButtonPressed(convForward)) {
 
@@ -86,16 +116,16 @@ public class BbarConvMotors {
           
         } else if (joy.getRawButton(convForwardContinous)) {
 
-          conveyor.set(ControlMode.PercentOutput, .75);
+            conveyor.set(ControlMode.PercentOutput, .75);
 
         } else if (joy.getRawButton(convReverseContinous)) {
 
-          conveyor.set(ControlMode.PercentOutput, -.75);
+            conveyor.set(ControlMode.PercentOutput, -.75);
 
         }  else {
 
-          conveyor.set(ControlMode.PercentOutput, 0);
+            conveyor.set(ControlMode.PercentOutput, 0);
 
         }
       }
-}
+    }
