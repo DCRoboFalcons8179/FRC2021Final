@@ -121,7 +121,8 @@ public class velocityControl {
 		_rightMaster.config_kF(Constants.kSlot_Velocit, Constants.kGains_Velocit.kF, Constants.kTimeoutMs);
 		_rightMaster.config_IntegralZone(Constants.kSlot_Velocit, Constants.kGains_Velocit.kIzone, Constants.kTimeoutMs);
 		_rightMaster.configClosedLoopPeakOutput(Constants.kSlot_Velocit, Constants.kGains_Velocit.kPeakOutput, Constants.kTimeoutMs);
-		_rightMaster.configAllowableClosedloopError(Constants.kSlot_Velocit, 50, Constants.kTimeoutMs);
+		_rightMaster.configAllowableClosedloopError(Constants.kSlot_Velocit, 0, Constants.kTimeoutMs);
+		_leftMaster.configAllowableClosedloopError(0, 0, Constants.kTimeoutMs);
 			
 		/**
 		 * 1ms per loop.  PID loop can be slowed down if need be.

@@ -41,7 +41,7 @@ public class tiltcontrol {
         tilt.configPeakOutputForward(0.7,Constants.kTimeoutMs);
         tilt.configPeakOutputReverse(-0.5,Constants.kTimeoutMs);
         
-        tilt.configAllowableClosedloopError(0, 250, Constants.kTimeoutMs);
+        tilt.configAllowableClosedloopError(0, 50, Constants.kTimeoutMs);
 
         tilt.setSensorPhase(false);
         tilt.setInverted(false);
