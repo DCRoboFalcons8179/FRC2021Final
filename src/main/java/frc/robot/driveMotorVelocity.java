@@ -182,7 +182,7 @@ public class driveMotorVelocity {
         else {
             _state = false;
         }
-        if ((tx > 1.25 || tx < 0) && joy.getRawButton(8)){
+        if ((tx > 1 || tx < 0) && joy.getRawButton(8)){
             _state = true;
 
         }
@@ -193,7 +193,7 @@ public class driveMotorVelocity {
                 left.set(ControlMode.PercentOutput, -0.15);
                 right.set(ControlMode.PercentOutput, 0.15);
             } 
-            else if ((nudge.getRawAxis(channel) == +1) || tx > 1.25) {
+            else if ((nudge.getRawAxis(channel) == +1) || tx > 1) {
                 left.set(ControlMode.PercentOutput,   0.15);
                 right.set(ControlMode.PercentOutput, -0.15);
             }
