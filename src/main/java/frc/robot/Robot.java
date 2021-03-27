@@ -42,7 +42,7 @@ public class Robot extends TimedRobot {
 	private Joystick dashboard = new Joystick(4);
 
   private driveMotorVelocity vroom = new driveMotorVelocity(leftDrive, rightDrive, leftFollow, 
-    rightFollow,_gamepad, dashboard, 1);
+    rightFollow,_gamepad, dashboard, 0);
   
   BbarConvMotors bbar;
   TalonFX bbar_motor;
@@ -109,7 +109,15 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     limelight.refreshValues();
 
-   
+    computer_rpm_reading.setDouble(shooter_rpm);
+    computer_rpm = computer_rpm_table.getDouble(0);
+    computer_rpm_enable = computer_rpm_set_table.getBoolean(false);
+
+
+    
+    computer_tilt_reading.setDouble(tilt.tilt_degrees);
+    computer_tilt = computer_tilt_table.getDouble(0);
+    computer_tilt_enable = computer_tilt_set_table.getBoolean(false);
     
 // Pull this
 

@@ -176,24 +176,26 @@ public class driveMotorVelocity {
         double target_unitsPer100ms = target_RPM * 1024 / 600.0;	//RPM -> Native units
         double feedFwdTerm = turn * 0.10;	// Percentage added to the close loop output
         
-        if (nudge.getRawAxis(channel) == 0) {
-            _state = false;
+        if (Math.round(nudge.getRawAxis(channel)) != 0) {
+            _state = true;
         } 
-        else if ((tx > 1 || tx < -1) && joy.getRawButton(8)){
+        else {
             _state = false;
         }
-        else {
+        if ((tx > 1 || tx < 0) && joy.getRawButton(8)){
             _state = true;
+
         }
 
+
         if (_state) {
-            if((nudge.getRawAxis(channel) == 1) || tx > 1) {
-                left.set(ControlMode.PercentOutput, -0.2);
-                right.set(ControlMode.PercentOutput, 0.2);
+            if((nudge.getRawAxis(channel) == -1) || tx < 0) {
+                left.set(ControlMode.PercentOutput, -0.15);
+                right.set(ControlMode.PercentOutput, 0.15);
             } 
-            else if ((nudge.getRawAxis(channel) == -1) || tx < -1) {
-                left.set(ControlMode.PercentOutput,   0.2);
-                right.set(ControlMode.PercentOutput, -0.2);
+            else if ((nudge.getRawAxis(channel) == +1) || tx > 1) {
+                left.set(ControlMode.PercentOutput,   0.15);
+                right.set(ControlMode.PercentOutput, -0.15);
             }
 
         }
