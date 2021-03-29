@@ -93,8 +93,14 @@ public class Robot extends TimedRobot {
     final VictorSPX conv_motor = new WPI_VictorSPX(3);
 
     bbar = new BbarConvMotors(dashboard, 7, 5, 6, 11, bbar_motor, 1, 9, 10, 3, conv_motor);
-  
-  }
+
+    try
+    {
+      Logging.CustomLogger.setup();
+    }
+    catch (Throwable e) { Logging.logException(e); }
+      Logging.consoleLog();
+    }
 
   /**
    * This function is called every robot packet, no matter the mode. Use
@@ -163,6 +169,7 @@ public class Robot extends TimedRobot {
   
    @Override
    public void teleopPeriodic() {
+     Logging.consoleLog(_gamepad.getRawAxis(0) + "");
 		tilt.updateSensors();
 		tilt_deg = tilt.tilt_degrees;
 
