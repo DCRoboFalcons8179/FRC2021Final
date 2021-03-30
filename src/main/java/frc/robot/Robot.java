@@ -166,9 +166,12 @@ public class Robot extends TimedRobot {
 		tilt.updateSensors();
 		tilt_deg = tilt.tilt_degrees;
 
-		shooterSpeed.velocityControlPeriodic();
-		tilt.tiltcontrolPeriodic();
+    shooterSpeed.velocityControlPeriodic();
+    tilt.tiltcontrolPeriodic();
 
+    tilt.zonetiltcontrol();
+    shooterSpeed.zoneshooter();
+    
 		//beaterbar and conveyor
 		bbar.periodic_bar_conv();
 

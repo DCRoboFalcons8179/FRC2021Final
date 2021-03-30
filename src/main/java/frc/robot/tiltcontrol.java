@@ -25,6 +25,11 @@ public class tiltcontrol {
     public double setpoint;
     public int y = 1;
 
+    private int green_zone = 12;
+    private int yellow_zone = 2;
+    private int blue_zone = 4;
+    private int red_zone = 8;
+
 
     public tiltcontrol(TalonFX tilt_input, Joystick joy_input) {
 
@@ -77,7 +82,7 @@ public class tiltcontrol {
         if (joy.getRawAxis(y) == -1) {
             tilt.set(ControlMode.PercentOutput, 0.1);
             setpoint = tilt.getSelectedSensorPosition() / ktranslate;
-            // System.out.println("Percent");
+            // System.out.println("Percent"); 
 
         }else if (joy.getRawAxis(y) == 1) {
             tilt.set(ControlMode.PercentOutput, -0.07);
@@ -90,6 +95,23 @@ public class tiltcontrol {
             // System.out.println("PID");
 
         }
+    }
+
+    public void zonetiltcontrol() {
+
+        if (joy.getRawButtonPressed(green_zone)) {
+            setpoint = 0;
+            } else if(joy.getRawButtonPressed(yellow_zone)) {
+                setpoint = 22.5;
+            } else if(joy.getRawButtonPressed(blue_zone)){
+                setpoint = 12.5;
+            } else if(joy.getRawButtonPressed(red_zone)){
+                setpoint = 10;
+            } else {
+                setpoint = 0;
+            }
+
+        }
         
         // System.out.println(setpoint);
         // System.out.println(tilt.getClosedLoopError(0));
@@ -99,8 +121,5 @@ public class tiltcontrol {
         //     tilt.setSelectedSensorPosition(0, 0, Constants.kTimeoutMs);
         // }
 
-       }
-
-
-    
-}
+       
+    }
