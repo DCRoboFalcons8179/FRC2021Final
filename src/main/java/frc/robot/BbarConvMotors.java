@@ -13,23 +13,16 @@ public class BbarConvMotors {
     Joystick joy;
 
     int bbarForward;
-
     int bbarReverse;
-
     int bbarForwardContinous;
-
     int bbarReverseContinous;
 
     TalonFX bbar;
-
     VictorSPX conveyor;
 
     int convForward;
-
     int convReverse;
-
     int convForwardContinous;
-
     int convReverseContinous;
 
     //joystick objects are not directly available in main method, get values from controls class

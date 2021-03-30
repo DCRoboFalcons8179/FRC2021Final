@@ -163,14 +163,21 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
 		shooterSpeed = new velocityControl(leftTurret,rightTurret,_gamepad,3,3500);
-		shooterSpeed.throttleType = true;
+    shooterSpeed.throttleType = true;
+    Mecanum.setup();
   }
 
   
    @Override
    public void teleopPeriodic() {
      Logging.consoleLog(_gamepad.getRawAxis(0) + "");
-		tilt.updateSensors();
+     Mecanum.drive(_gamepad.getRawAxis(0),_gamepad.getRawAxis(1));
+
+     tilt.zonetiltcontrol();
+
+     shooterSpeed.zoneshooter();
+      
+		/*tilt.updateSensors();
 		tilt_deg = tilt.tilt_degrees;
 
 		shooterSpeed.velocityControlPeriodic();
@@ -213,7 +220,7 @@ public class Robot extends TimedRobot {
 		// CONTROLLING THE WHEELS
 
 		vroom.velocityControlPeriodic(limelight.tx);
-
+*/
 
 
    }
