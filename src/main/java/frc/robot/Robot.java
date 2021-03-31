@@ -24,7 +24,7 @@ public class Robot extends TimedRobot {
   // PDP
   	private final PowerDistributionPanel PDP = new PowerDistributionPanel(0);
   	private TalonFX tilt_motor = new WPI_TalonFX(6);
-	private TalonSRX leftTurret = new  WPI_TalonSRX(7);
+  	private TalonSRX leftTurret = new  WPI_TalonSRX(7);
   	private TalonSRX rightTurret = new WPI_TalonSRX(8);
   
 
@@ -161,50 +161,94 @@ public class Robot extends TimedRobot {
   }
 
   
+  zone green = new zone(0,1500);
+  zone yellow = new zone(22.5,6100);
+  zone blue = new zone(12.5,6100);
+  zone red = new zone(10.0,5600);
+
    @Override
    public void teleopPeriodic() {
+
+    boolean gb = dashboard.getRawButton(12);
+    boolean yb = dashboard.getRawButton(2);
+    boolean bb = dashboard.getRawButton(4);
+    boolean rb = dashboard.getRawButton(8);
+
+    double buttonspeed = 0;
+    double buttontilt = 0;
+
+
 		tilt.updateSensors();
-		tilt_deg = tilt.tilt_degrees;
+    tilt_deg = tilt.tilt_degrees;
 
-    shooterSpeed.velocityControlPeriodic();
-    tilt.tiltcontrolPeriodic();
 
-    tilt.zonetiltcontrol();
-    shooterSpeed.zoneshooter();
-    
+
 		//beaterbar and conveyor
 		bbar.periodic_bar_conv();
 
 
-		// CONTROLLING THE SHOOTER WHEELS
+    // BUTTON OVERRIDE
+    if (gb||yb||bb||rb) {
+      if (gb) {
+        buttonspeed = green.rpm;
+        buttontilt = green.tilt;
+      }
+      else if (yb) {
+        buttonspeed = yellow.rpm;
+        buttontilt = yellow.tilt;
+      }
+      else if (bb) {
+        buttonspeed = blue.rpm;
+        buttontilt = blue.tilt;
+      }
+      else if (rb) {
+        buttonspeed = red.rpm;
+        buttontilt = red.tilt;
+      }
+      tilt.zonetiltcontrol(buttontilt);
+      shooterSpeed.set_rpm = buttonspeed;
+      shooterSpeed.rpm_set_mode = true;
+    }
+    else {
+      // CONTROLLING THE SHOOTER WHEELS
 
-		// Computer Control
-		if(computer_rpm_enable) {
-			shooterSpeed.set_rpm = computer_rpm;
-			shooterSpeed.rpm_set_mode = true;
-		} 
+      buttonspeed = 0;
+      buttontilt = 0;
 
-		else {
-			
-			shooterSpeed.rpm_set_mode = false;
-			
-		}
-		shooter_rpm = shooterSpeed.actual_RPM;
-	
-		// CONTROLLING THE TILT CONTROL
+      // Computer Control
+      if(computer_rpm_enable) {
+        shooterSpeed.set_rpm = computer_rpm;
+        shooterSpeed.rpm_set_mode = true;
+      } 
+      else {
+        
+        shooterSpeed.rpm_set_mode = false;
+        
+      }
+    
+      // CONTROLLING THE TILT CONTROL
 
-		if(computer_tilt_enable) {
-			tilt.setpoint = computer_tilt;
-		} else {
-			if (_gamepad.getRawButtonPressed(3)) {
-				tilt.setpoint = 10;
-			} else if (_gamepad.getRawButtonPressed(4)){
-				tilt.setpoint = 20;
-			}
-		}
-		if (_gamepad.getRawButton(5)) {
-			tilt.resetSensors();
-		}
+      if(computer_tilt_enable) {
+        tilt.setpoint = computer_tilt;
+      } else {
+        if (_gamepad.getRawButtonPressed(3)) {
+          tilt.setpoint = 10;
+        } else if (_gamepad.getRawButtonPressed(4)){
+          tilt.setpoint = 20;
+        }
+      }
+
+    }
+
+    shooter_rpm = shooterSpeed.actual_RPM;
+
+    shooterSpeed.velocityControlPeriodic();
+    tilt.tiltcontrolPeriodic();
+
+    
+    if (_gamepad.getRawButton(5)) {
+      tilt.resetSensors();
+    }
 
 		// CONTROLLING THE WHEELS
 

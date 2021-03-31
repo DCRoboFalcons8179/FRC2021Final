@@ -97,21 +97,9 @@ public class tiltcontrol {
         }
     }
 
-    public void zonetiltcontrol() {
-
-        if (joy.getRawButtonPressed(green_zone)) {
-            setpoint = 0;
-            } else if(joy.getRawButtonPressed(yellow_zone)) {
-                setpoint = 22.5;
-            } else if(joy.getRawButtonPressed(blue_zone)){
-                setpoint = 12.5;
-            } else if(joy.getRawButtonPressed(red_zone)){
-                setpoint = 10;
-            } else {
-                setpoint = 0;
-            }
-
-        }
+    public void zonetiltcontrol(double set) {
+        setpoint = set;
+    }
         
         // System.out.println(setpoint);
         // System.out.println(tilt.getClosedLoopError(0));

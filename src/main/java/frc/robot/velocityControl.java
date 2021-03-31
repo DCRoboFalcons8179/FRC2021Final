@@ -276,30 +276,5 @@ public class velocityControl {
 
 	}
 	
-	public void zoneshooter() {
-
-		if(_gamepad.getRawButtonPressed(green_zone)) {
-			_leftMaster.set(ControlMode.PercentOutput, 0);
-			_rightMaster.set(ControlMode.PercentOutput, 0);
-		} else if(_gamepad.getRawButtonPressed(yellow_zone)) {
-			_leftMaster.set(ControlMode.PercentOutput, 6000);
-			_rightMaster.set(ControlMode.PercentOutput, 6000);
-		} else if(_gamepad.getRawButtonPressed(blue_zone)) {
-			_leftMaster.set(ControlMode.PercentOutput, 6000);
-			_rightMaster.set(ControlMode.PercentOutput, 6000);
-		} else if(_gamepad.getRawButtonPressed(red_zone)) {
-			_leftMaster.set(ControlMode.PercentOutput, 5500);
-			_rightMaster.set(ControlMode.PercentOutput, 5500);
-		} else {
-			_leftMaster.set(ControlMode.PercentOutput, 0);
-			_rightMaster.set(ControlMode.PercentOutput, 0);
-		}
-	}
-
-
-
-
-
-
     
 }
