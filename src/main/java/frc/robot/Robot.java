@@ -161,10 +161,10 @@ public class Robot extends TimedRobot {
   }
 
   
-  zone green = new zone(0,1500);
-  zone yellow = new zone(22.5,6100);
-  zone blue = new zone(12.5,6100);
-  zone red = new zone(10.0,5600);
+  zone green = new zone(0,1350);
+  zone yellow = new zone(16,6100);
+  zone blue = new zone(8.5,6100);
+  zone red = new zone(6,6000);
 
    @Override
    public void teleopPeriodic() {
