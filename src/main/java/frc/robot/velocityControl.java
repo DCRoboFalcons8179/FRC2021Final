@@ -17,12 +17,6 @@ public class velocityControl {
 	private TalonSRX _leftMaster;
 	private TalonSRX _rightMaster;
 	private Joystick _gamepad;
-
-	//Zone buttons
-	private int green_zone = 12;
-    private int yellow_zone = 2;
-    private int blue_zone = 4;
-	private int red_zone = 8;
 	
     // Control Mapping
     private int axis;

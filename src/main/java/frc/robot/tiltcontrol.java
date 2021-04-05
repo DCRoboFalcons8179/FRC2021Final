@@ -1,7 +1,6 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice; 
 import com.ctre.phoenix.motorcontrol.can.*;
@@ -24,11 +23,6 @@ public class tiltcontrol {
     Joystick joy;
     public double setpoint;
     public int y = 1;
-
-    private int green_zone = 12;
-    private int yellow_zone = 2;
-    private int blue_zone = 4;
-    private int red_zone = 8;
 
 
     public tiltcontrol(TalonFX tilt_input, Joystick joy_input) {

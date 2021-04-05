@@ -160,19 +160,19 @@ public class driveMotorVelocity {
         
         /* Calculate targets from gamepad inputs */
 
-        boolean go = true;
+        // boolean go = true;
 
         double target_RPM;
 
         if (!rpm_set_mode){
             target_RPM = forward * max_rpm;	// +- 1000 RPM?
             if (forward == 0) {
-               go = false;
+            //    go = false;
             }
         }
         else {
             if (set_rpm < 0) {
-                go = false;
+                // go = false;
             }
             
             target_RPM = set_rpm/2.1;
@@ -237,7 +237,7 @@ public class driveMotorVelocity {
 
         /* Uncomment to view RPM in Driver Station */
         actual_RPM = (left.getSelectedSensorVelocity() / (double)1024 * -600f); //4/3 scaling factor
-        double actual_RPM2 = actual_RPM - (right.getSelectedSensorVelocity() / (double)1024 * -600f); //4/3 scaling factor
+        // double actual_RPM2 = actual_RPM - (right.getSelectedSensorVelocity() / (double)1024 * -600f); //4/3 scaling factor
         
         // System.out.println("Vel[RPM]: " + actual_RPM + "," + actual_RPM2);
         // System.out.println("Vel[RPM]: " + actual_RPM2);
