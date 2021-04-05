@@ -22,7 +22,9 @@ public class driveMotorVelocity {
     VictorSPX rightFollow;
     Joystick joy;
     Joystick nudge;
+    Joystick dashboard;
     int channel;
+    double driveReverse = 1;
 
     boolean _firstCall;
     boolean _state;
@@ -145,9 +147,14 @@ public class driveMotorVelocity {
 
     public void velocityControlPeriodic(double tx) {
 		/* Gamepad processing */
-		double forward = getForward();
-		double turn = getTurn();
 
+        
+        if (joy.getRawButtonPressed(6)){
+            driveReverse = driveReverse * -1.0;
+        }
+
+        double forward = getForward();
+        double turn = getTurn();
             
 		/* Button processing for state toggle and sensor zeroing */
         boolean _state = false;
@@ -182,7 +189,7 @@ public class driveMotorVelocity {
         else {
             _state = false;
         }
-        if ((tx > 1 || tx < 0) && joy.getRawButton(8)){
+        if ((tx > 2 || tx < 1) && joy.getRawButton(8)){
             _state = true;
 
         }
@@ -247,7 +254,9 @@ public class driveMotorVelocity {
         } else {
             scale = 0.6;
         }
-        double forward = -1 * scale * Deadband(joy.getY());
+
+
+        double forward = -1 * driveReverse * scale * Deadband(joy.getY());
 
         
         return forward;

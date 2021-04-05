@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
@@ -70,6 +71,15 @@ public class Robot extends TimedRobot {
 	private NetworkTableEntry computer_tilt_table;
 	private NetworkTableEntry computer_tilt_reading;
 
+  DigitalInput button1 = new DigitalInput(1);
+  DigitalInput button2 = new DigitalInput(2);
+  DigitalInput button3 = new DigitalInput(3);
+
+  private NetworkTableEntry button1_network_table;
+  private NetworkTableEntry button2_network_table;
+  private NetworkTableEntry button3_network_table;
+
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -86,13 +96,18 @@ public class Robot extends TimedRobot {
 		computer_tilt_set_table = tab.add("Tilt Set Enable", false).getEntry();
 
 
+    button1_network_table = tab.add("Conveyor Index 1", false).getEntry();
+    button2_network_table = tab.add("Conveyor Index 2", false).getEntry();
+    button3_network_table = tab.add("Conveyor Index 3", false).getEntry();
+
+
     tilt = new tiltcontrol(tilt_motor,dashboard);
 
 
     final TalonFX bbar_motor = new TalonFX(11);
     final VictorSPX conv_motor = new WPI_VictorSPX(3);
 
-    bbar = new BbarConvMotors(dashboard, 7, 5, 6, 11, bbar_motor, 1, 9, 10, 3, conv_motor);
+    bbar = new BbarConvMotors(dashboard, 7, 5, 6, 11, bbar_motor, 1, 9, 10, 3, conv_motor,_gamepad);
   
   }
 
@@ -105,10 +120,21 @@ public class Robot extends TimedRobot {
    * LiveWindow and SmartDashboard integrated updating.
    */
 
+
+   boolean b1;
+   boolean b2;
+   boolean b3;
+
+
   @Override
   public void robotPeriodic() {
+    b1 = button1.get();
+    b2 = button2.get();
+    b3 = button3.get();
+
     limelight.refreshValues();
 
+  
     computer_rpm_reading.setDouble(shooter_rpm);
     computer_rpm = computer_rpm_table.getDouble(0);
     computer_rpm_enable = computer_rpm_set_table.getBoolean(false);
@@ -119,6 +145,11 @@ public class Robot extends TimedRobot {
     computer_tilt = computer_tilt_table.getDouble(0);
     computer_tilt_enable = computer_tilt_set_table.getBoolean(false);
     
+    button1_network_table.setBoolean(b1);
+    button2_network_table.setBoolean(b2);
+    button3_network_table.setBoolean(b3);
+
+
 // Pull this
 
 
@@ -169,6 +200,8 @@ public class Robot extends TimedRobot {
    @Override
    public void teleopPeriodic() {
 
+
+
     boolean gb = dashboard.getRawButton(12);
     boolean yb = dashboard.getRawButton(2);
     boolean bb = dashboard.getRawButton(4);
@@ -184,7 +217,7 @@ public class Robot extends TimedRobot {
 
 
 		//beaterbar and conveyor
-		bbar.periodic_bar_conv();
+		bbar.periodic_bar_conv(b1,b2,b3);
 
 
     // BUTTON OVERRIDE
