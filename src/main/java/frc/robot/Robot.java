@@ -252,9 +252,8 @@ public class Robot extends TimedRobot {
 
 		// CONTROLLING THE WHEELS
 
-		vroom.velocityControlPeriodic(limelight.tx);
+		vroom.velocityControlPeriodic(limelight.tx, _gamepad.getTwist(),);
 
-
-
+    
    }
 }
