@@ -109,7 +109,15 @@ public class Robot extends TimedRobot {
     final VictorSPX conv_motor = new WPI_VictorSPX(3);
 
     bbar = new BbarConvMotors(dashboard, 7, 5, 6, 11, bbar_motor, 1, 9, 10, 3, conv_motor,_gamepad);
-  
+
+
+    try
+    {
+        Logging.CustomLogger.setup();
+    }
+    catch (Throwable e) { Logging.logException(e); }
+    
+    Logging.consoleLog();
   }
 
   /**
@@ -301,6 +309,7 @@ public class Robot extends TimedRobot {
     }
 
     // CONTROLLING THE WHEELS
+    Logging.consoleLog();
     Logging.consoleLog(Double.toString(_gamepad.getTwist()));
     Logging.consoleLog(Double.toString(_gamepad.getY()));
     Logging.consoleLog(Boolean.toString(_gamepad.getRawButton(1)));
