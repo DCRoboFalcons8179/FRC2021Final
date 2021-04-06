@@ -186,9 +186,15 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    String rawInput = inputData.nextLine();
-    String[] controls = rawInput.split(",");
-    System.out.println(controls[0]);
+    String[] controls;
+    if(inputData != null){
+      String rawInput = inputData.nextLine();
+      controls = rawInput.split(",");
+      System.out.println(controls[0]);
+    }
+    else{
+      controls = new String[]{"0","0"};
+    }
 
     vroom.velocityControlPeriodic(limelight.tx, Double.parseDouble(controls[0]), Double.parseDouble(controls[1]));
   }
