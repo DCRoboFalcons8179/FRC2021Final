@@ -21,7 +21,6 @@ public class driveMotorVelocity {
     VictorSPX leftFollow;
     VictorSPX rightFollow;
     Joystick joy;
-    Joystick _gamepad;
     Joystick nudge;    
     int channel;
     double driveReverse = 1;
@@ -246,7 +245,7 @@ public class driveMotorVelocity {
     }
 
 
-    private double getForward(double y_controller) {
+    private double getForward(double qqqq) {
         double scale;
         if (joy.getRawButton(1)) {
             scale = 1;
@@ -254,12 +253,12 @@ public class driveMotorVelocity {
             scale = 0.6;
         }
 
-        if (_gamepad.getRawButtonPressed(7)) {
+        if (joy.getRawButtonPressed(7)) {
             driveReverse = driveReverse * -1;
         }
 
         
-        double forward = -1 * driveReverse * scale * Deadband(y_controller);
+        double forward = -1 * driveReverse * scale * Deadband(qqqq);
 
         
         return forward;
