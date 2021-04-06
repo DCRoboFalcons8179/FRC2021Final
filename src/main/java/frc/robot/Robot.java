@@ -24,7 +24,7 @@ public class Robot extends TimedRobot {
 
   // BEGIN Declare and Attach CAN IDs to devices
   // PDP
-  	private final PowerDistributionPanel PDP = new PowerDistributionPanel(0);
+  	// private final PowerDistributionPanel PDP = new PowerDistributionPanel(0);
   	private TalonFX tilt_motor = new WPI_TalonFX(6);
   	private TalonSRX leftTurret = new  WPI_TalonSRX(7);
   	private TalonSRX rightTurret = new WPI_TalonSRX(8);
@@ -193,10 +193,10 @@ public class Robot extends TimedRobot {
       System.out.println(controls[0]);
     }
     else{
-      controls = new String[]{"0","0"};
+      controls = new String[]{"0","0", "false"};
     }
 
-    vroom.velocityControlPeriodic(limelight.tx, Double.parseDouble(controls[0]), Double.parseDouble(controls[1]));
+    vroom.velocityControlPeriodic(limelight.tx, Double.parseDouble(controls[0]), Double.parseDouble(controls[1]), Boolean.parseBoolean(controls[2]));
   }
   /**
    * This function is called periodically during operator control.
@@ -303,8 +303,9 @@ public class Robot extends TimedRobot {
     // CONTROLLING THE WHEELS
     Logging.consoleLog(Double.toString(_gamepad.getTwist()));
     Logging.consoleLog(Double.toString(_gamepad.getY()));
+    Logging.consoleLog(Boolean.toString(_gamepad.getRawButton(1)));
 
-		vroom.velocityControlPeriodic(limelight.tx, _gamepad.getTwist(), _gamepad.getY());
+		vroom.velocityControlPeriodic(limelight.tx, _gamepad.getTwist(), _gamepad.getY(), _gamepad.getRawButton(1));
 
     
    }
