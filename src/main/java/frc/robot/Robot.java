@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import com.ctre.phoenix.motorcontrol.can.*;
 
 import edu.wpi.first.wpilibj.shuffleboard.*;
+import java.util.Scanner;
+import java.io.File;  
 
 public class Robot extends TimedRobot {
 
@@ -167,9 +169,15 @@ public class Robot extends TimedRobot {
    * the switch structure below with additional strings. If using the
    * SendableChooser make sure to add them to the chooser code above as well.
    */
+  Scanner inputData;
+  
   @Override
   public void autonomousInit() {
-
+    File inputs = new File("/home/lvuser/deploy/log.csv");
+    try{
+      inputData = new Scanner(inputs);
+    }
+    catch(Exception e){}
   }
 
   /**
@@ -178,7 +186,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
+    String rawInput = inputData.nextLine();
+    String[] controls = rawInput.split(",");
+    System.out.println(controls[0]);
 
+    vroom.velocityControlPeriodic(limelight.tx, Double.parseDouble(controls[0]), Double.parseDouble(controls[1]));
   }
   /**
    * This function is called periodically during operator control.
@@ -282,7 +294,9 @@ public class Robot extends TimedRobot {
       tilt.resetSensors();
     }
 
-		// CONTROLLING THE WHEELS
+    // CONTROLLING THE WHEELS
+    Logging.consoleLog(Double.toString(_gamepad.getTwist()));
+    Logging.consoleLog(Double.toString(_gamepad.getY()));
 
 		vroom.velocityControlPeriodic(limelight.tx, _gamepad.getTwist(), _gamepad.getY());
 
