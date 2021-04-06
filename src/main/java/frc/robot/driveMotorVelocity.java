@@ -145,9 +145,9 @@ public class driveMotorVelocity {
     public double actual_RPM;
     public double set_rpm;
 
-    public void velocityControlPeriodic(double tx, double turn_controller) {
+    public void velocityControlPeriodic(double tx, double turn_controller, double y_controller) {
 		/* Gamepad processing */
-		double forward = getForward();
+		double forward = getForward(y_controller);
 		double turn = getTurn(turn_controller);
 
         
@@ -246,7 +246,7 @@ public class driveMotorVelocity {
     }
 
 
-    private double getForward() {
+    private double getForward(double y_controller) {
         double scale;
         if (joy.getRawButton(1)) {
             scale = 1;
@@ -259,7 +259,7 @@ public class driveMotorVelocity {
         }
 
         
-        double forward = -1 * driveReverse * scale * Deadband(joy.getY());
+        double forward = -1 * driveReverse * scale * Deadband(y_controller);
 
         
         return forward;
