@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -19,6 +20,10 @@ import com.ctre.phoenix.motorcontrol.can.*;
 import edu.wpi.first.wpilibj.shuffleboard.*;
 import java.util.Scanner;
 import java.io.File;  
+
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.GyroBase;  
+import edu.wpi.first.wpilibj.SPI.Port;
 
 public class Robot extends TimedRobot {
 
@@ -79,14 +84,17 @@ public class Robot extends TimedRobot {
   private NetworkTableEntry button1_network_table;
   private NetworkTableEntry button2_network_table;
   private NetworkTableEntry button3_network_table;
-
-
+  
+  Gyro gyro = new ADXRS450_Gyro(Port.kMXP);
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
+    gyro.calibrate();
+    gyro.reset();
+
     computer_rpm_reading = tab.add("RPM Reading", 0).getEntry();
 		computer_rpm_table = tab.add("RPM Set Value", 0).getEntry();
 		computer_rpm_set_table = tab.add("RPM Set Enable", false).getEntry();
@@ -202,17 +210,31 @@ public class Robot extends TimedRobot {
         System.out.println(controls[0]);
       }
       catch(Exception e){
-        controls = new String[]{"0", "0", "0"};
+        controls = new String[]{"0", "0", "0", "0"};
       }
     }
     else{
-      controls = new String[]{"0","0", "0"};
+      controls = new String[]{"0","0", "0", "0"};
     }
     boolean boost = false;
     if(Double.parseDouble(controls[2]) > 0.1){
       boost = true;
     }
-    vroom.velocityControlPeriodic(limelight.tx, Double.parseDouble(controls[0]), Double.parseDouble(controls[1]), boost);
+    double turn = Double.parseDouble(controls[0]);
+    double forward = Double.parseDouble(controls[1]);
+
+    double error = gyro.getAngle() - Double.parseDouble(controls[3]);
+    if(Math.abs(error) > 5){
+      if(error > 0){
+        turn = Math.max(-error / 45, -1);
+      }
+      if(error < 0){
+        turn = Math.min(-error / 45, 1);
+      }
+    }
+
+
+    vroom.velocityControlPeriodic(limelight.tx, turn, forward, boost);
   }
   /**
    * This function is called periodically during operator control.
@@ -324,6 +346,7 @@ public class Robot extends TimedRobot {
     Logging.consoleLog();
     Logging.consoleLog(Double.toString(turn));
     Logging.consoleLog(Double.toString(forward));
+    Logging.consoleLog(Double.toString(gyro.getAngle()));
     int ludicrus;
     
     if ( _gamepad.getRawButton(1)){
