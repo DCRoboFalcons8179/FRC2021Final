@@ -201,10 +201,13 @@ public class Robot extends TimedRobot {
       System.out.println(controls[0]);
     }
     else{
-      controls = new String[]{"0","0", "false"};
+      controls = new String[]{"0","0", "0"};
     }
-
-    vroom.velocityControlPeriodic(limelight.tx, Double.parseDouble(controls[0]), Double.parseDouble(controls[1]), Boolean.parseBoolean(controls[2]));
+    boolean boost = false;
+    if(Double.parseDouble(controls[2]) > 0.1){
+      boost = true;
+    }
+    vroom.velocityControlPeriodic(limelight.tx, Double.parseDouble(controls[0]), Double.parseDouble(controls[1]), boost);
   }
   /**
    * This function is called periodically during operator control.
@@ -312,7 +315,15 @@ public class Robot extends TimedRobot {
     Logging.consoleLog();
     Logging.consoleLog(Double.toString(_gamepad.getTwist()));
     Logging.consoleLog(Double.toString(_gamepad.getY()));
-    Logging.consoleLog(Boolean.toString(_gamepad.getRawButton(1)));
+    int boost;
+    
+    if ( _gamepad.getRawButton(1)){
+      boost = 1;
+    }
+    else{
+      boost = 0;
+    }
+    Logging.consoleLog(Integer.toString(boost));
 
 		vroom.velocityControlPeriodic(limelight.tx, _gamepad.getTwist(), _gamepad.getY(), _gamepad.getRawButton(1));
 
