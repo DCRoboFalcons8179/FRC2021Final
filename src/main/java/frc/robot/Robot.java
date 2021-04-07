@@ -226,7 +226,7 @@ public class Robot extends TimedRobot {
 
   
   zone green = new zone(0,1350);
-  zone yellow = new zone(16,6100);
+  zone yellow = new zone(17.5,6100);
   zone blue = new zone(8.5,6100);
   zone red = new zone(6,6000);
 
