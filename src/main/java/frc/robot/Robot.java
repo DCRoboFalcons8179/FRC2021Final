@@ -196,9 +196,14 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     String[] controls;
     if(inputData != null){
-      String rawInput = inputData.nextLine();
-      controls = rawInput.split(",");
-      System.out.println(controls[0]);
+      try{
+        String rawInput = inputData.nextLine();
+        controls = rawInput.split(",");
+        System.out.println(controls[0]);
+      }
+      catch(Exception e){
+        controls = new String[]{"0", "0", "0"};
+      }
     }
     else{
       controls = new String[]{"0","0", "0"};
@@ -312,20 +317,24 @@ public class Robot extends TimedRobot {
     }
 
     // CONTROLLING THE WHEELS
+    double turn = _gamepad.getTwist();
+    double forward = _gamepad.getY();
+    boolean boost = _gamepad.getRawButton(1);
+    
     Logging.consoleLog();
-    Logging.consoleLog(Double.toString(_gamepad.getTwist()));
-    Logging.consoleLog(Double.toString(_gamepad.getY()));
-    int boost;
+    Logging.consoleLog(Double.toString(turn));
+    Logging.consoleLog(Double.toString(forward));
+    int ludicrus;
     
     if ( _gamepad.getRawButton(1)){
-      boost = 1;
+      ludicrus = 1;
     }
     else{
-      boost = 0;
+      ludicrus = 0;
     }
-    Logging.consoleLog(Integer.toString(boost));
+    Logging.consoleLog(Integer.toString(ludicrus));
 
-		vroom.velocityControlPeriodic(limelight.tx, _gamepad.getTwist(), _gamepad.getY(), _gamepad.getRawButton(1));
+		vroom.velocityControlPeriodic(limelight.tx, turn, forward, boost);
 
     
    }

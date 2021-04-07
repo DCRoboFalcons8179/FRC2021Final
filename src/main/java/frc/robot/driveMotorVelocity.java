@@ -265,7 +265,7 @@ public class driveMotorVelocity {
     }
 
     private double getTurn(double turn_controller) {
-        double turn = 0.4 * Deadband(turn_controller);
+        double turn = 0.25 * Deadband(turn_controller);
         return turn;
     }
 
@@ -287,5 +287,8 @@ public class driveMotorVelocity {
 		
 		/* Outside deadband */
 		return 0;
-	}
+    }
+    
+
+    
 }
