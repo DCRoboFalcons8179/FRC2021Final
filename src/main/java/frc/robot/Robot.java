@@ -85,7 +85,7 @@ public class Robot extends TimedRobot {
   private NetworkTableEntry button2_network_table;
   private NetworkTableEntry button3_network_table;
   
-  Gyro gyro = new ADXRS450_Gyro(Port.kMXP);
+  ADXRS450_Gyro gyro = new ADXRS450_Gyro();
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -119,13 +119,13 @@ public class Robot extends TimedRobot {
     bbar = new BbarConvMotors(dashboard, 7, 5, 6, 11, bbar_motor, 1, 9, 10, 3, conv_motor,_gamepad);
 
 
-    try
-    {
-        Logging.CustomLogger.setup();
-    }
-    catch (Throwable e) { Logging.logException(e); }
+    // try
+    // {
+    //     Logging.CustomLogger.setup();
+    // }
+    // catch (Throwable e) { Logging.logException(e); }
     
-    Logging.consoleLog();
+    // Logging.consoleLog();
   }
 
   /**
@@ -207,7 +207,6 @@ public class Robot extends TimedRobot {
       try{
         String rawInput = inputData.nextLine();
         controls = rawInput.split(",");
-        System.out.println(controls[0]);
       }
       catch(Exception e){
         controls = new String[]{"0", "0", "0", "0"};
@@ -217,24 +216,26 @@ public class Robot extends TimedRobot {
       controls = new String[]{"0","0", "0", "0"};
     }
     boolean boost = false;
-    if(Double.parseDouble(controls[2]) > 0.1){
+    if(Double.parseDouble(controls[3]) > 0.1){
       boost = true;
     }
     double turn = Double.parseDouble(controls[0]);
     double forward = Double.parseDouble(controls[1]);
 
-    double error = gyro.getAngle() - Double.parseDouble(controls[3]);
+    double error = gyro.getAngle() - Double.parseDouble(controls[2]);
+    
     if(Math.abs(error) > 5){
       if(error > 0){
-        turn = Math.max(-error / 45, -1);
+        turn = Math.max(turn + -error / 10, -1);
       }
       if(error < 0){
-        turn = Math.min(-error / 45, 1);
+        turn = Math.min(turn + -error / 10, 1);
       }
     }
+    // System.out.println(gyro.getAngle() + ", " + error + ", " + turn);
 
 
-    vroom.velocityControlPeriodic(limelight.tx, turn, forward, boost);
+    vroom.velocityControlPeriodic(0, turn, forward, boost);
   }
   /**
    * This function is called periodically during operator control.
@@ -343,10 +344,10 @@ public class Robot extends TimedRobot {
     double forward = _gamepad.getY();
     boolean boost = _gamepad.getRawButton(1);
     
-    Logging.consoleLog();
-    Logging.consoleLog(Double.toString(turn));
-    Logging.consoleLog(Double.toString(forward));
-    Logging.consoleLog(Double.toString(gyro.getAngle()));
+    // Logging.consoleLog();
+    // Logging.consoleLog(Double.toString(turn));
+    // Logging.consoleLog(Double.toString(forward));
+    // Logging.consoleLog(Double.toString(gyro.getAngle()));
     int ludicrus;
     
     if ( _gamepad.getRawButton(1)){
@@ -355,7 +356,7 @@ public class Robot extends TimedRobot {
     else{
       ludicrus = 0;
     }
-    Logging.consoleLog(Integer.toString(ludicrus));
+    // Logging.consoleLog(Integer.toString(ludicrus));
 
 		vroom.velocityControlPeriodic(limelight.tx, turn, forward, boost);
 
