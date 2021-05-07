@@ -13,8 +13,10 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class driveMotorVelocity {
-
+    static final double slowdown = 6;
+    static final double stopat = 1;
     static final Gains kGains = new Gains(-0.1, 0.0, 0, 0, 0, 1.0);
+
 
     TalonSRX left;
     TalonSRX right;
@@ -194,19 +196,19 @@ public class driveMotorVelocity {
 
 
         if (_state) {
-            if((nudge.getRawAxis(channel) == -1) || tx < -2) {
+            if((nudge.getRawAxis(channel) == -1) || tx < -slowdown) {
                 left.set(ControlMode.PercentOutput, -0.15);
                 right.set(ControlMode.PercentOutput, 0.15);
             } 
-            else if ((nudge.getRawAxis(channel) == +1) || (tx > 1 && tx <3)) {
-                left.set(ControlMode.PercentOutput,   0.07);
-                right.set(ControlMode.PercentOutput, -0.15);
+            else if ((nudge.getRawAxis(channel) == +1) || (tx > stopat && tx < slowdown)) {
+                left.set(ControlMode.PercentOutput,   tx/40);
+                right.set(ControlMode.PercentOutput, -tx/40);
             }
-            else if((nudge.getRawAxis(channel) == -1) || (tx > -2 && tx < 0)) {
-                left.set(ControlMode.PercentOutput, -0.07);
-                right.set(ControlMode.PercentOutput, 0.07);
+            else if((nudge.getRawAxis(channel) == -1) || (tx > -slowdown && tx < -stopat)) {
+                left.set(ControlMode.PercentOutput,   tx/40);
+                right.set(ControlMode.PercentOutput, -tx/40);
             } 
-            else if ((nudge.getRawAxis(channel) == +1) || tx > 3) {
+            else if ((nudge.getRawAxis(channel) == +1) || tx > slowdown) {
                 left.set(ControlMode.PercentOutput,   0.15);
                 right.set(ControlMode.PercentOutput, -0.15);
             }
